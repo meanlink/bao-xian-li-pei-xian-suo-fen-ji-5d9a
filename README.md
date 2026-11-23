@@ -38,6 +38,18 @@ docker compose exec -T backend python scripts/seed_demo.py
 
 后端启动时幂等创建复核表和补件跟进表，已有数据库卷可直接升级。重复运行演示 seed 会保留已经处理的理赔案件、线索和复核记录。
 
+## 凭证撤回
+
+发证方撤回凭证后，风险主管在「证据复核」工作台按凭证来源和编号登记撤回说明。同一编号的凭证可能被多起案件引用，登记会在同一事务中逐案处理：
+
+- 未结案且已采纳的复核决定一并失效：复核回到「待补正」、线索回到「待核查」，案件因此暂停核赔，直到补交其他凭证或复核完成。
+- 待主管复核的证据直接退回待补证；已结案的案件保留原决定，撤回记录单独留痕。
+- 撤回后该凭证不能再送审或采纳，也不能据此办结案件；换成其他凭证可以重新提交。
+- 登记失败时所有案件维持原状；重复登记同一来源与编号不会重复记录，只回显原登记。
+- 「凭证撤回登记」列出每次撤回涉及的案号与处理结果（采纳决定失效 / 退回待补证 / 已结案保留原决定），供受理员和主管查阅。
+
+登记接口为 `POST /evidence-withdrawals`，查询接口为 `GET /evidence-withdrawals`，实现见 `backend/src/services/evidence_withdrawal_service.py`，表结构见 `backend/migrations/004_evidence_withdrawals.sql`。
+
 ## 共享枚举
 
 - 案件状态：`intake / initial_review / modeled / investigating / adjudicating / closed / rejected`

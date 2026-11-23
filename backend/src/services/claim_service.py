@@ -2,6 +2,7 @@ import json
 from datetime import date
 from src.services.logistic_model import score_claim, confusion_matrix, choose_threshold
 from src.services.clue_review_service import unresolved_review_count
+from src.services.evidence_withdrawal_service import lock_claim_credentials
 from src.services.document_triage_service import INTAKE_STATES, complete_followup, missing_documents
 from src.utils.audit import record, record_in_transaction
 from src.utils.db import get_conn
@@ -101,6 +102,8 @@ def complete_task(task_id, payload, user_id):
 
 def adjudicate(claim_id, user_id):
     with get_conn() as conn:
+        # Order closing against any in-flight withdrawal of the credentials it used.
+        lock_claim_credentials(conn, claim_id)
         claim = conn.execute("SELECT status FROM claims WHERE id=%s FOR UPDATE", (claim_id,)).fetchone()
         if not claim:
             raise ValueError("案件不存在")

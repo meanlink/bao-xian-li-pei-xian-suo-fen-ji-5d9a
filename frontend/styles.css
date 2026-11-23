@@ -49,3 +49,10 @@
 .triage-error{margin:0;color:oklch(44% .16 25)}
 @media(max-width:950px){.triage-row{grid-template-columns:1fr 1fr}.triage-actions{justify-items:start}}
 @media(max-width:550px){.triage-row{grid-template-columns:1fr}.triage-date{display:none}}
+
+.withdrawal-impacts{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:7px}
+.withdrawal-impacts li{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.withdrawal-impacts .btn{padding:5px 10px;font-size:12px}
+#withdrawal-log .review-record:last-child{border-bottom:0;padding-bottom:0}
+#withdrawal-form label{font-weight:600}
+#withdrawal-form button:disabled{opacity:.6;cursor:wait}

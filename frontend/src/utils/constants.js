@@ -10,5 +10,6 @@ export const clueStatus = {open:'待核查', confirmed:'已证实', dismissed:'�
 export const clueReviewStatus = {unsubmitted:'未提交', pending:'待主管复核', returned:'待补正', resolved:'已复核'};
 export const clueEvidenceSource = {official_record:'官方记录', original_media:'原始影像', issuer_confirmation:'出具方回函'};
 export const clueReviewClaimStatuses = ['investigating', 'adjudicating'];
+export const withdrawalOutcome = {invalidated:'采纳决定失效 · 待补证', returned:'退回待补证', retained:'已结案 · 保留原决定'};
 
 export function canTriage(role){return role === 'intake_agent' || role === 'risk_manager'}

@@ -5,3 +5,4 @@ ROLES = {"intake_agent", "investigator", "risk_manager"}
 
 CLUE_REVIEW_CLAIM_STATUSES = {"investigating", "adjudicating"}
 CLUE_REVIEW_OPEN_STATUSES = ("pending", "returned")
+CLOSED_CLAIM_STATUSES = {"closed", "rejected"}
